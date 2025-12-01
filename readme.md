@@ -1,7 +1,6 @@
 This repository contains my submission for the HealthRx / Bajaj Finserv Hiring Assessment (Java).  
 
--> The JAR File is located inside the output folder.
--> The output of the response is given in the image below:
+-> The JAR File is located inside the output folder. The output of the response is given in the image below:
 ![WhatsApp Image 2025-12-01 at 16 51 11_72f4c608](https://github.com/user-attachments/assets/95f67212-d4a8-46e2-aaab-2607df1e5e61)
 
 ## Features 
@@ -58,4 +57,5 @@ bfhl/
  ├── pom.xml
  └── README.md
 ```
+
 
