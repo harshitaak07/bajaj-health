@@ -1,0 +1,38 @@
+        WITH high_salary AS (
+    SELECT
+        d.DEPARTMENT_ID,
+        d.DEPARTMENT_NAME,
+        e.EMP_ID,
+        e.FIRST_NAME,
+        e.LAST_NAME,
+        e.DOB,
+        p.AMOUNT
+    FROM EMPLOYEE e
+    JOIN DEPARTMENT d
+        ON e.DEPARTMENT = d.DEPARTMENT_ID
+    JOIN PAYMENTS p
+        ON e.EMP_ID = p.EMP_ID
+    WHERE p.AMOUNT > 70000
+),
+with_age AS (
+    SELECT
+        DEPARTMENT_ID,
+        DEPARTMENT_NAME,
+        EMP_ID,
+        FIRST_NAME,
+        LAST_NAME,
+        EXTRACT(YEAR FROM AGE(DATE(p.PAYMENT_TIME), DOB)) AS AGE
+    FROM high_salary h
+    JOIN PAYMENTS p
+        ON h.EMP_ID = p.EMP_ID
+    WHERE p.AMOUNT > 70000
+)
+SELECT
+    DEPARTMENT_NAME,
+    ROUND(AVG(AGE), 2) AS AVERAGE_AGE,
+    STRING_AGG(FIRST_NAME || ' ' || LAST_NAME, ', ' ORDER BY FIRST_NAME, LAST_NAME)
+        WITHIN GROUP (ORDER BY FIRST_NAME)
+        LIMIT 10 AS EMPLOYEE_LIST
+FROM with_age
+GROUP BY DEPARTMENT_NAME
+ORDER BY MAX(DEPARTMENT_ID) DESC;
